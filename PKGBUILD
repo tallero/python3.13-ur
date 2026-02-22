@@ -52,7 +52,7 @@ _pyminver=13
 _pkgver="${_pymajver}.${_pyminver}"
 pkgname="${_pkg}${_pkgver}"
 pkgver="${_pkgver}.0"
-pkgrel=3
+pkgrel=4
 _pyver="${pkgver}"
 _pybasever="${_pkgver}"
 _pkgdesc=(
@@ -83,6 +83,7 @@ depends=(
 )
 makedepends=(
   'bluez-libs'
+  "${_c_compilers[@]}"
   'gdb'
   'mpdecimal'
 )

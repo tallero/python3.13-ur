@@ -52,7 +52,7 @@ _pyminver=13
 _pkgver="${_pymajver}.${_pyminver}"
 pkgname="${_pkg}${_pkgver}"
 pkgver="${_pkgver}.0"
-pkgrel=1
+pkgrel=2
 _pyver="${pkgver}"
 _pybasever="${_pkgver}"
 _pkgdesc=(
@@ -92,7 +92,7 @@ _mpdecimal_optdepends=(
 )
 optdepends=(
   'sqlite'
-  "${_mpdecimal_optdepends[@]}"
+  "${_mpdecimal_optdepends[*]}"
 )
 _tarname="${_Pkg}-${pkgver}"
 _tarfile="${_tarname}.tar.xz"

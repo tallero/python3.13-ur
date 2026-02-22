@@ -192,7 +192,7 @@ _check_tag_latest() {
       tail \
         -n \
           1)"
-  _tag_build="${_tag}"
+  _tag_build="${tag}"
   _tag_current="${_tag_build}"
   _tag_recipe="$(
     recipe-get \
@@ -214,8 +214,6 @@ _check_tag_latest() {
       0
   fi
 }
-
-
 
 _requirements() {
   local \
@@ -253,11 +251,11 @@ _requirements() {
     "fur" \
     "${_fur_mini_opts[@]}"
   _fur_release_public="0.0.1.1.1.1.1.1.1.1.1.1.1"
-  _fur_opts+=(
-    -v
-    -p
-      "pacman"
-  )
+  # _fur_opts+=(
+  #   -v
+  #   -p
+  #     "pacman"
+  # )
   # pacman \
   #   -S \
   #   --noconfirm \
@@ -269,25 +267,25 @@ _requirements() {
   true
   _check_tag_latest \
     "${_pkgname}"
-  _evm_chains_release_latest="20250816-3"
-  _evm_chains_explorers_release_latest="0.0.0.0.0.0.0.0.0.0.1.1.1-3"
-  _evm_chains_info_release_latest="0.0.0.0.0.0.0.0.0.0.1.1.1.1.1.1.1-6"
-  _evm_contracts_abi_get_release_latest="0.0.0.0.0.0.0.0.0.0.0.1.1.1.1.1.1-2"
-  _evm_contract_tools_release_latest="0.0.0.0.0.0.0.0.1.1.1.1.1-1"
-  _evm_gnupg_release_latest="0.0.0.0.0.0.0.0.1.1.1.1.1.1-3"
-  _evm_wallet_release_latest="0.0.0.0.0.0.0.0.0.0.1.1.1-3"
+  _evm_chains_release_latest="20250816-6"
+  _evm_chains_explorers_release_latest="0.0.0.0.0.0.0.0.0.0.1.1.1-5"
+  _evm_chains_info_release_latest="0.0.0.0.0.0.0.0.0.0.1.1.1.1.1.1.1-8"
+  _evm_contracts_abi_get_release_latest="0.0.0.0.0.0.0.0.0.0.0.1.1.1.1.1.1-3"
+  _evm_contract_tools_release_latest="0.0.0.0.0.0.0.0.1.1.1.1.1-4"
+  _evm_gnupg_release_latest="0.0.0.0.0.0.0.0.1.1.1.1.1.1-5"
+  _evm_wallet_release_latest="0.0.0.0.0.0.0.0.0.0.1.1.1-6"
   _fur_release_latest="1.0.0.0.0.0.0.0.0.0.1.1-2"
-  _gl_dl_release_latest="0.0.0.0.0.0.0.0.0.0.0.0.1.1.1.1.1.1-3"
+  _gl_dl_release_latest="0.0.0.0.0.0.0.0.0.0.0.0.1.1.1.1.1.1-5"
   _gur_release_latest="0.0.0.0.0.0.0.0.0.0.0.0.0.0.1.1-5"
-  _key_gen_release_latest="0.0.0.0.0.0.0.0.0.0.0.1-2"
-  _libcrash_bash_release_latest="0.0.0.0.0.1.1.1.1.1-8"
+  _key_gen_release_latest="0.0.0.0.0.0.0.0.0.0.0.1-5"
+  _libcrash_bash_release_latest="0.0.0.0.0.1.1.1.1.1-11"
   _libcrash_js_release_latest="0.1.69-25"
   _libevm_release_latest="0.0.0.0.0.0.0.0.1.1.1.1.1.1.1-4"
-  _node_run_release_latest="0.0.0.0.0.0.0.0.1-8"
-  _python_aiohttp_retry_release_latest="2.8.3-4"
-  _python_aioetherscan_release_latest="0.9.6.1-7"
-  _python_asyncio_throttle_release_latest="1.0.2-4"
-  _ucantellme_release_latest="0.0.0.0.0.0.0.0.0.0.0.0.0.1.1.1-2"
+  _node_run_release_latest="0.0.0.0.0.0.0.0.1-10"
+  _python_aiohttp_retry_release_latest="2.8.3-7"
+  _python_aioetherscan_release_latest="0.9.6.1-9"
+  _python_asyncio_throttle_release_latest="1.0.2-9"
+  _ucantellme_release_latest="0.0.0.0.0.0.0.0.0.0.0.0.0.1.1.1-3"
   _gur_mini \
     "${ns}" \
     "libcrash-bash" \
@@ -396,23 +394,8 @@ _requirements() {
     --noconfirm \
     "tree" \
     "github-cli" \
-    "unzip"
-  # _fur_opts+=(
-  #   -l
-  #     "bur"
-  #   -m
-  #     "gitlab"
-  # )
-  # fur \
-  #   "${_fur_opts[@]}" \
-  #   "gur"
-  # _fur_opts+=(
-  #   -t
-  #     "ci"
-  # )
-  # fur \
-  #   "${_fur_opts[@]}" \
-  #   "reallymakepkg"
+    "unzip" || \
+  true
   _git_http="$(
     recipe-get \
       "/home/user/${_pkgname}/PKGBUILD" \
@@ -428,13 +411,12 @@ _requirements() {
       "${ns}" \
       "${_pkgname}" \
       "${_commit}"
-    recipe-get \
-      "/home/user/${_pkgname}/PKGBUILD" \
-      "_git_http"
-    cp \
+    mv \
       "${HOME}/${_pkgname}-${_commit}.tar.gz" \
-      "/home/user/${_pkgname}"
-  fi
+      "/home/user/${_pkgname}" || \
+    true
+  fi || \
+  true
 }
 
 _build() {
@@ -448,11 +430,13 @@ _build() {
     _depend_pkgver \
     _depend_target \
     _home \
+    _oldpwd \
     _pkgbuild \
     _pkgname \
     _resolve_flag \
     _work_dir \
-    _separators=()
+    _separators=() \
+    _msg=()
   declare \
     -A \
     _makedepends_set
@@ -465,11 +449,22 @@ _build() {
   )
   _home="/home/user"
   _pkgname="${pkg%-ur}"
-  _work_dir="${_home}/ramdisk/${_pkgname}-build"
+  _work_dir="${_home}/${_pkgname}-build"
   _pkgbuild="${_home}/${_pkgname}/PKGBUILD"
-  mount  |
-    grep \
-      "${_home}/ramdisk"
+  _ramdisk_enabled="$(
+    mount |
+      grep \
+        "${_home}/ramdisk" || \
+      true)"
+  if [[ "${_ramdisk_enabled}" != "" ]]; then
+    _work_dir="${_home}/ramdisk/${_pkgname}-build"
+  else
+    _msg=(
+      "[build.sh][WARNING] Ramdisk disabled."
+    )
+    echo \
+      "${_msg[*]}"
+  fi
   _reallymakepkg_opts+=(
     -v
     -w
@@ -480,7 +475,7 @@ _build() {
     --nocheck
   )
   if [[ "${ns}" != "themartiancompany" ]]; then
-    _evmfs="$( \
+    _evmfs="$(
       recipe-get \
         "/home/user/${_pkgname}/PKGBUILD" \
         "_evmfs")"
@@ -490,9 +485,10 @@ _build() {
       )
     fi
   fi
-  for _depend in $(recipe-get \
-                     "${_pkgbuild}" \
-        "makedepends"); do
+  for _depend \
+    in $(recipe-get \
+           "${_pkgbuild}" \
+           "makedepends"); do
     _resolve_flag="false"
     _depend_target="${_depend}"
     for _sep in "${_separators[@]}"; do
@@ -525,6 +521,12 @@ _build() {
     -p
       "pacman"
   )
+  _msg=(
+    "Found makedepends"
+    "'${_makedepends[*]}'."
+  )
+  echo \
+    "${_msg[*]}"
   for _depend in "${_makedepends[@]}"; do
     _msg=(
       "Installing makedepend"
@@ -592,6 +594,7 @@ _build() {
   _something_built="false"
   for _file in "${_home}/${_pkgname}/"*".pkg.tar."*; do
     _something_built="true"
+    break
   done
   if [[ "${_something_built}" == "true" ]]; then
     pacman \
@@ -603,13 +606,23 @@ _build() {
       "Build failed, printing"
       "work directory content."
     )
+    echo \
+      "${_msg[*]}"
     tree \
       -L 5 \
+      "${_work_dir}"
+    _oldpwd="${PWD}"
+    cd \
       "${_work_dir}"
     tar \
       cJf \
       "build-directory.tar.xz" \
-      "${_work_dir}"
+      *
+    mv \
+      "build-directory.tar.xz" \
+      "${_oldpwd}"
+    cd \
+      "${_oldpwd}"
   fi
   for _file \
     in "${_home}/${_pkgname}/"*".pkg.tar."*; do
